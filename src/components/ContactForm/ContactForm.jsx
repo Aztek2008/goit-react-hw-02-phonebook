@@ -1,19 +1,15 @@
 import React from "react";
 import styles from "./ContactForm.module.css";
 
-export default function ContactForm({
-  state,
-  onCreateContact,
-  onCreateChange,
-}) {
+export default function ContactForm({ state, onAddContact, onHandleChange }) {
   return (
-    <form onSubmit={onCreateContact}>
+    <form className={styles.ContactForm} onSubmit={onAddContact}>
       <label>
         <p>Name</p>
         <input
           type="text"
           value={state.name}
-          onChange={onCreateChange}
+          onChange={onHandleChange}
           name="name"
         />
       </label>
@@ -24,11 +20,13 @@ export default function ContactForm({
           type="tel"
           name="number"
           value={state.number}
-          onChange={onCreateChange}
+          onChange={onHandleChange}
         />
       </label>
 
-      <button type="submit">Add Contact</button>
+      <button className={styles.ContactFormButton} type="submit">
+        Add Contact
+      </button>
     </form>
   );
 }

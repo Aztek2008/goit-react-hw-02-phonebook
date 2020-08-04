@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Section from "./components/Section/Section";
 import { v4 as uuidv4 } from "uuid";
 
 class App extends Component {
@@ -18,8 +19,13 @@ class App extends Component {
     };
 
     this.setState((prevState) => {
+      const existedContacts = prevState.contacts.map((cont) => cont.name);
+      const newName = contact.name;
+
       return {
-        contacts: [...prevState.contacts, contact],
+        contacts: !existedContacts.includes(newName)
+          ? [...prevState.contacts, contact]
+          : prevState.contacts,
       };
     });
   };
@@ -32,46 +38,44 @@ class App extends Component {
   };
 
   changeFilter = (e) => {
-    console.log("e.target: ", e);
     const { name, value } = e;
     this.setState({
       [name]: value,
     });
-
-    // eturn tasks.filter(task =>
-    //   task.text.toLowerCase().includes(filter.toLowerCase()),
-    // );
   };
+
+  // getVisibleContacts = () => {
+  //   const { contacts, filter } = this.state;
+
+  //   return (
+  //     this.state.contacts.length > 0 &&
+  //     contacts.filter((contact) =>
+  //       contact.name.toLowerCase().includes(filter.toLowerCase())
+  //     )
+  //   );
+  // };
+
+  //   Достаточно выделить четыре компонента: форма добавления контактов, список контактов, элемент списка контактов и фильтр поиска.
+
+  // <div>
+  //   <h1>Phonebook</h1>
+  //   <ContactForm ... />
+
+  //   <h2>Contacts</h2>
+  //   <Filter ... />
+  //   <ContactList ... />
+  // </div>
 
   render() {
     return (
       <div>
-        <section>
-          <h2>Phonebook</h2>
-          <form onSubmit={this.addContact}>
-            <label>
-              <p>Name</p>
-              <input
-                type="text"
-                value={this.state.name}
-                onChange={this.handleChange}
-                name="name"
-              />
-            </label>
+        <Section
+          appState={this.state}
+          title="Phonebook"
+          onAddContact={this.addContact}
+          onHandleChange={this.handleChange}
+        />
 
-            <label>
-              <p>Number</p>
-              <input
-                type="tel"
-                name="number"
-                value={this.state.number}
-                onChange={this.handleChange}
-              />
-            </label>
-
-            <button type="submit">Add Contact</button>
-          </form>
-        </section>
         <section>
           <h2>Contacts</h2>
 
@@ -85,9 +89,15 @@ class App extends Component {
           </label>
 
           <ul>
+            {/* {visibleTasks.length > 0 &&
+              visibleTasks.map((contact) => (
+                <li key={contact.id}>
+                  {contact.name}: {contact.number}
+                </li>
+              ))} */}
             {this.state.contacts.length > 0 &&
               this.state.contacts.map((contact) => (
-                <li>
+                <li key={contact.id}>
                   {contact.name}: {contact.number}
                 </li>
               ))}

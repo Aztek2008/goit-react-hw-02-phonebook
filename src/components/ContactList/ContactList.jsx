@@ -1,20 +1,17 @@
 import React from "react";
 
-export default function ContactList({ state, onVisibleTasks }) {
+export default function ContactList({ contacts, onVisibleTasks }) {
   return (
-    <ul>
-      {onVisibleTasks.length > 0 &&
-        onVisibleTasks.map((contact) => (
+    <ul style={{ padding: 0 }}>
+      {contacts.length > 0 ? (
+        contacts.map((contact) => (
           <li key={contact.id}>
             {contact.name}: {contact.number}
           </li>
-        ))}
-      {/* {state.contacts.length > 0 &&
-        state.contacts.map((contact) => (
-          <li key={contact.id}>
-            {contact.name}: {contact.number}
-          </li>
-        ))} */}
+        ))
+      ) : (
+        <p style={{ margin: 0, fontSize: 14, color: "grey" }}>No match...</p>
+      )}
     </ul>
   );
 }

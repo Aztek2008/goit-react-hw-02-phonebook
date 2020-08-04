@@ -1,12 +1,12 @@
 import React from "react";
 
-export default function Filter({ state, onChangeFilter }) {
+export default function Filter({ value, onChangeFilter }) {
   return (
     <label>
       <input
         type="text"
         name="filter"
-        value={state.filter}
+        value={value}
         onChange={(e) => onChangeFilter(e.target)}
         placeholder="Search contact..."
       />

@@ -3,43 +3,42 @@ import Section from "./Section/Section";
 import ContactForm from "./ContactForm/ContactForm";
 import Filter from "./Filter";
 import ContactList from "./ContactList/ContactList";
-import PropTypes from "prop-types";
-// import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 class App extends Component {
   state = {
     contacts: [],
     filter: "",
-    // name: "",
-    // number: "",
+    name: "",
+    number: "",
   };
 
-  // addContact = (e) => {
-  //   e.preventDefault();
-  //   const contact = {
-  //     id: uuidv4(),
-  //     name: this.state.name,
-  //     number: this.state.number,
-  //   };
+  addContact = (e) => {
+    e.preventDefault();
+    const contact = {
+      id: uuidv4(),
+      name: this.state.name,
+      number: this.state.number,
+    };
 
-  //   this.setState((prevState) => {
-  //     const existedContacts = prevState.contacts.map((cont) => cont.name);
-  //     const newName = contact.name;
+    this.setState((prevState) => {
+      const existedContacts = prevState.contacts.map((cont) => cont.name);
+      const newName = contact.name;
 
-  //     return {
-  //       contacts: !existedContacts.includes(newName)
-  //         ? [...prevState.contacts, contact]
-  //         : prevState.contacts,
-  //     };
-  //   });
-  // };
+      return {
+        contacts: !existedContacts.includes(newName)
+          ? [...prevState.contacts, contact]
+          : prevState.contacts,
+      };
+    });
+  };
 
-  // handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   this.setState({
-  //     [name]: value,
-  //   });
-  // };
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
+  };
 
   changeFilter = (e) => {
     const { name, value } = e;
@@ -70,7 +69,7 @@ class App extends Component {
       <div>
         <Section title="Phonebook">
           <ContactForm
-            onSubmit={this.addContact}
+            // onSubmit={this.addContact}
             contacts={visibleContacts}
             name={name}
             number={number}

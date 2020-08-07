@@ -35,6 +35,11 @@ class App extends Component {
 
   handleChange = (e) => {
     const { name, value } = e.target;
+    // this.props.onsubmit({
+    // id: uuidv4(),
+    // name: this.state.name,
+    // number: this.state.number,
+    // })...  THIS IS FOR USING IN COMPONENT ContactForm
     this.setState({
       [name]: value,
     });

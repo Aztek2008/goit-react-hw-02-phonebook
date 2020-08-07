@@ -12,6 +12,7 @@
   padding: 10px;
   border: 1px solid #303030;
   outline: none;
+  margin-left: 20px;
 }
 
 .ContactFormButton:hover {

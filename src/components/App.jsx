@@ -3,28 +3,18 @@ import Section from "./Section/Section";
 import ContactForm from "./ContactForm/ContactForm";
 import Filter from "./Filter";
 import ContactList from "./ContactList/ContactList";
-import { v4 as uuidv4 } from "uuid";
 
 class App extends Component {
   state = {
     contacts: [],
     filter: "",
-    name: "",
-    number: "",
   };
 
-  addContact = (e) => {
-    e.preventDefault();
-    const contact = {
-      id: uuidv4(),
-      name: this.state.name,
-      number: this.state.number,
-    };
-
+  addContact = (contact) => {
     this.setState((prevState) => {
       const existedContacts = prevState.contacts.map((cont) => cont.name);
       const newName = contact.name;
-
+      // PREVENT SAVING SAME CONTACT
       return {
         contacts: !existedContacts.includes(newName)
           ? [...prevState.contacts, contact]
@@ -33,15 +23,11 @@ class App extends Component {
     });
   };
 
-  handleChange = (e) => {
-    const { name, value } = e.target;
-    // this.props.onsubmit({
-    // id: uuidv4(),
-    // name: this.state.name,
-    // number: this.state.number,
-    // })...  THIS IS FOR USING IN COMPONENT ContactForm
+  removeContact = (e) => {
     this.setState({
-      [name]: value,
+      contacts: this.state.contacts.filter(
+        (contact) => contact.id !== e.target.id
+      ),
     });
   };
 
@@ -66,28 +52,21 @@ class App extends Component {
   };
 
   render() {
-    const { filter, name, number } = this.state;
+    const { filter } = this.state;
 
     const visibleContacts = this.getVisibleContacts();
 
     return (
       <div>
         <Section title="Phonebook">
-          <ContactForm
-            // onSubmit={this.addContact}
-            contacts={visibleContacts}
-            name={name}
-            number={number}
-            onAddContact={this.addContact}
-            onHandleChange={this.handleChange}
-          />
+          <ContactForm onSubmit={this.addContact} />
         </Section>
 
         <Section title="Contacts">
           <Filter onChangeFilter={this.changeFilter} value={filter} />
           <ContactList
-            onVisibleTasks={this.getVisibleContacts}
             contacts={visibleContacts}
+            onRemoveContact={this.removeContact}
           />
         </Section>
       </div>
